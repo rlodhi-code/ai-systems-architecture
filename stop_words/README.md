@@ -1,6 +1,10 @@
 rlodhi-code (github) - https://github.com/rlodhi-code/nlp_lab
 
+This project.
+https://github.com/rlodhi-code/nlp_lab/tree/main/stop_words
+
 Link to jupyter notebook.
+https://github.com/rlodhi-code/nlp_lab/blob/main/stop_words/Stopwords.ipynb
 
 Following steps have been implemented in this project. 
 Step  	Transformation				Example
