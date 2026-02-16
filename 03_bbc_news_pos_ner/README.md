@@ -20,6 +20,7 @@ Description: "bbc_news_pos_ner" implements a real world use case:
 	* most common places
 
 
-Link to Jupyter Notebook: http://localhost:8888/notebooks/anaconda_projects/nlp_lab/bbc_news_pos_ner/bbc_news_pos_ner.ipynb
+Link to Jupyter Notebook: https://github.com/rlodhi-code/nlp_lab/blob/main/03_bbc_news_pos_ner/bbc_news_pos_ner.ipynb
+
 
 
