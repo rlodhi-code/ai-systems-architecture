@@ -1,0 +1,25 @@
+Description: "bbc_news_pos_ner" implements a real world use case:
+* reads a data file in .csv format
+* converts to lowercase
+* removes stop words
+* removes punctuation
+* toknize
+* lemmatizing 
+* create lists for tokens
+* POS - parts of speech tagging
+	* creates a spacy doc from raw text - better for pos tagging
+	* extracts the tokens and pos tags into a dataframe
+	* token frequency count
+	* builds most common nouns
+	* most common verbs
+	* most common adjectives
+* NER - named entity recognition
+	* extract the tokens and entity tags into a dataframe
+	* token frequency count
+	* most common people
+	* most common places
+
+
+Link to github: https://github.com/rlodhi-code/nlp_lab/tree/main/bbc_news_POS_NER
+Link to Jupyter Notebook: https://github.com/rlodhi-code/nlp_lab/blob/main/bbc_news_POS_NER/3.4%20Practical_bbc_news.ipynb
+
