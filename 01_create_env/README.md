@@ -1,7 +1,3 @@
-Here’s a clean, concise **README.md** you can drop directly into that folder. It matches the structure shown in your screenshot and sets the tone for “Part 1” of a series.
-
----
-
 # 📘 Environment Setup — Part 1 of the Series
 
 This folder is the **first installment** in the *AI Systems Architecture* learning series. It focuses entirely on preparing a clean, reliable development environment before moving on to more advanced topics.
@@ -28,4 +24,3 @@ conda activate ai-systems-architecture
 ```bash
 pip install -r requirements.txt
 ```
-
