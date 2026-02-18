@@ -1,8 +1,3 @@
-Absolutely — here is your **README.md** rewritten in pure Markdown text so that **all icons/emojis render correctly on GitHub**.  
-Nothing proprietary, no hidden formatting — just clean, GitHub‑friendly Markdown.
-
----
-
 # 🧠 Topic Modeling with LDA & LSA  
 A practical guide using **Python** and the **Gensim** library
 
