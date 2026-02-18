@@ -129,39 +129,3 @@ lsi_model.print_topics()
 | Interpretability | High | Medium |
 | Speed | Slower | Faster |
 | Best for | Topic discovery | Similarity, retrieval |
-
----
-
-# 📦 Suggested Repository Structure
-
-```
-├── data/
-│   └── sample_texts.txt
-├── notebooks/
-│   └── lda_example.ipynb
-│   └── lsa_example.ipynb
-├── src/
-│   └── preprocess.py
-│   └── lda_model.py
-│   └── lsa_model.py
-└── README.md
-```
-
----
-
-# 🚀 Future Enhancements  
-- Add coherence score evaluation  
-- Add visualization (pyLDAvis)  
-- Add spaCy‑based preprocessing  
-- Add BERTopic or Top2Vec for modern topic modeling  
-
----
-
-If you'd like, I can also generate:
-
-- A **shorter** README  
-- A **more advanced** README with coherence scores and visualizations  
-- A **tutorial-style** README with screenshots  
-- A **version tailored for beginners**
-
-Just tell me the style you want.
