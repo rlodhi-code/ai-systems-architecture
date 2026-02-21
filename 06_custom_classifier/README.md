@@ -111,7 +111,7 @@ The primary objective is to:
 
 ---
 
-```markdown
+
 # NLP Custom Classifiers – Sentiment Analysis Baseline
 
 This repository contains a Jupyter notebook demonstrating a **simple end-to-end pipeline** for training traditional machine learning classifiers on a small, custom sentiment analysis dataset.
