@@ -110,3 +110,116 @@ The primary objective is to:
 * Create reusable pipelines for real-world NLP tasks
 
 ---
+
+```markdown
+# NLP Custom Classifiers – Sentiment Analysis Baseline
+
+This repository contains a Jupyter notebook demonstrating a **simple end-to-end pipeline** for training traditional machine learning classifiers on a small, custom sentiment analysis dataset.
+
+Part of the **AI Systems Architecture** learning path / experiments.
+
+## Overview
+
+The notebook shows how to:
+
+- Create and prepare a tiny handmade sentiment dataset
+- Apply basic **Bag-of-Words (BoW)** text vectorization
+- Train and compare three classic ML classifiers:
+  - Logistic Regression
+  - Multinomial Naive Bayes
+  - Linear SVM (via SGDClassifier)
+- Evaluate performance using accuracy and classification reports
+
+Goal: illustrate the full workflow of traditional NLP classification before moving to deep learning / transformers.
+
+## Dataset
+
+- **Size**: 20 short sentences (manually created)
+- **Classes**: binary sentiment – `positive` (10 samples) / `negative` (10 samples)
+- **Examples**:
+
+  Positive:
+  - "I love spending time with my friends and family"
+  - "Today was such an amazing and productive day"
+  - "I feel so grateful for all the support I receive"
+
+  Negative:
+  - "I feel so overwhelmed with work and responsibilities"
+  - "Nothing seems to be going right lately"
+  - "I'm really disappointed with how things turned out"
+
+- No external data files — dataset is hardcoded in the notebook
+- Shuffled and split: **70% train / 30% test** (fixed `random_state=7`)
+
+## Techniques Demonstrated
+
+- Text vectorization: `CountVectorizer` (Bag-of-Words, binary counts)
+- No stopword removal, no lemmatization, no TF-IDF (intentional baseline simplicity)
+- Models from `scikit-learn`:
+  - `LogisticRegression`
+  - `MultinomialNB`
+  - `SGDClassifier` (linear SVM approximation)
+
+## Results Summary
+
+| Model               | Accuracy | Notes                                      |
+|---------------------|----------|--------------------------------------------|
+| Logistic Regression | 33.33%   | Balanced but very low performance          |
+| Multinomial NB      | 33.33%   | Same as logistic — struggles with tiny data|
+| Linear SVM (SGD)    | 50.00%   | Best accuracy, but predicts *everything* as negative |
+
+→ Very low scores are **expected** — small synthetic dataset + basic features = poor generalization.
+
+## Notebook Structure
+
+1. Library imports
+2. Dataset creation + shuffling
+3. Bag-of-Words vectorization → sparse → dense DataFrame
+4. Train/test split
+5. Training & evaluation of three models
+6. Accuracy scores + full classification reports
+
+## Requirements
+
+```bash
+pip install pandas scikit-learn
+```
+
+- Python ≥ 3.8 recommended (notebook uses 3.11 kernel)
+
+## How to Run
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/rlodhi-code/ai-systems-architecture.git
+   cd ai-systems-architecture/06_custom_classifier
+   ```
+
+2. Open the notebook:
+   ```bash
+   jupyter notebook nlp_custom_classifiers.ipynb
+   # or
+   jupyter lab
+   ```
+
+3. Run all cells top to bottom.
+
+## Learning Takeaways / Next Steps
+
+- Why tiny handmade datasets are useful for understanding pipelines (but terrible for real performance)
+- Limitations of raw BoW vs TF-IDF / n-grams / embeddings
+- Class bias can appear even in balanced datasets when data is extremely small
+- Good baseline before trying:
+  - Larger datasets (IMDB, SST-2, Twitter sentiment, etc.)
+  - TF-IDF vectorizer
+  - Pretrained embeddings + simple feed-forward net
+  - Fine-tuning BERT / DistilBERT
+
+Feel free to extend / improve — PRs welcome!
+
+## License
+
+MIT (or align with the rest of the repo)
+
+Made with ❤️ as part of AI Systems Architecture experiments.
+```
