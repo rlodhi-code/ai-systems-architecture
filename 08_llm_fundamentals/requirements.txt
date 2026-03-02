@@ -1,5 +1,4 @@
-openai==0.28
-config==0.5.1
+openai==2.24.0
 langchain==0.0.297
 pydantic==1.10.9
 tiktoken==0.5.1
@@ -16,7 +15,8 @@ clean-text==0.6.0
 scikit-learn==1.6.0
 sentencepiece==0.2.0
 pandas==2.0.0
+python-dotenv==1.2.2
+
 jupyterlab
 notebook
 ipykernel
-python-dotenv
