@@ -19,3 +19,4 @@ pandas==2.0.0
 jupyterlab
 notebook
 ipykernel
+python-dotenv
