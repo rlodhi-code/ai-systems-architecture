@@ -1,0 +1,21 @@
+# Environment Clean Up Notes
+# Provides an estimate
+conda clean --all --dry-run
+# Reclaims space
+conda clean --all --yes
+# Alternate Options
+conda clean --packages --tarballs --yes   # just unused packages + tarballs (most space savings)
+conda clean --tarballs --yes               # only downloaded archives
+conda clean --packages --yes               # only unused extracted packages
+
+# Set environment variable optionally needed by langchain_community.utils.user_agent
+notepad C:\Tools\anaconda3\envs\llms_course_env_311\etc\conda\activate.d\env_vars.bat
+@echo off
+set USER_AGENT=RizwanLodhi-LLM-Course-Notebook/1.0 (Chicago; educational use)
+
+# Deactivate and activate environments
+conda deactivate
+conda activate llms_course_env_311
+
+# Environment info
+conda info
