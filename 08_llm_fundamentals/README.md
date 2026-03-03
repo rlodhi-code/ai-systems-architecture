@@ -1,58 +1,59 @@
 # **LLM Fundamentals**
 
-This module introduces the core concepts behind modern Large Language Models (LLMs) through a series of hands‑on notebooks. It covers GPT‑based text generation, transformer architectures, question‑answering models, and text classification workflows. The goal is to build a practical understanding of how contemporary language models are used, configured, and integrated into applications.
+This module introduces foundational concepts behind modern Large Language Models (LLMs) through practical, hands‑on notebooks. It covers GPT‑based text generation, prompt engineering, embeddings, retrieval‑augmented generation (RAG), and introductory transformer workflows. The goal is to build a working understanding of how LLMs are used, configured, and integrated into applications.
 
 ---
 
-## **Scope of the Module**
+## **Module Overview**
 
-The notebooks in this folder explore several foundational areas:
+The notebooks in this folder explore several core areas of LLM development:
 
-- Working with GPT models for text generation  
-- Designing prompts and controlling model behavior  
-- Summarization, keyword extraction, and structured outputs  
-- Building simple conversational agents  
-- Document loading, splitting, and embedding  
+- Text generation using GPT models  
+- Prompt design and output control  
+- Summarization and keyword extraction  
+- Conversational agents and stylistic generation  
+- Embeddings and vector stores  
 - Retrieval‑augmented generation (RAG)  
-- Introduction to transformer‑based pipelines  
+- Introduction to transformer‑based architectures  
 - Question answering with BERT  
 - Text classification with XLNet  
 
-Each notebook focuses on a specific concept or model family, allowing you to progress from basic API usage to more advanced transformer workflows.
+This module serves as a foundation for more advanced AI and NLP engineering work.
 
 ---
 
-## **Topics and Notebooks**
+## **Notebooks Included**
 
-### **1. GPT Models**
-Covers the fundamentals of interacting with GPT‑style models, including:
+### **1. gpt_models.ipynb**
+A hands‑on introduction to GPT‑style models, including:
 
 - API setup and authentication  
-- Prompt‑driven text generation  
-- Temperature, max token limits, and output shaping  
-- Summaries and keyword extraction  
+- Secure API key loading  
+- Prompt‑based text generation  
+- Temperature, max tokens, and output shaping  
+- Summaries, keyword extraction, and structured outputs  
 - A simple poetic chatbot  
-- Embeddings and vector stores  
+- Embeddings and vector store creation  
 - Conversational retrieval chains for Q&A  
 
-### **2. Transformers Introduction**
-A general introduction to transformer architectures:
+### **2. transformers_intro.ipynb** *(placeholder)*
+Introduces transformer architectures:
 
 - Loading pretrained models  
 - Tokenization and encoding  
 - Running inference locally  
-- Comparing transformer outputs with GPT‑based models  
+- Comparing transformer outputs with GPT models  
 
-### **3. BERT for Question Answering**
-Explores extractive question‑answering workflows:
+### **3. bert_question_answering.ipynb** *(placeholder)*
+Explores extractive question‑answering:
 
-- Using BERT‑based QA pipelines  
+- BERT‑based QA pipelines  
 - Handling context windows  
 - Extracting answer spans  
-- Evaluating model responses  
+- Evaluating responses  
 
-### **4. XLNet for Text Classification**
-Introduces classification using XLNet:
+### **4. xlnet_text_classification.ipynb** *(placeholder)*
+Covers text classification using XLNet:
 
 - Loading XLNet classification models  
 - Preparing text inputs  
@@ -61,7 +62,43 @@ Introduces classification using XLNet:
 
 ---
 
-## **Key Code Concepts from GPT Models Notebook**
+## **API Key Management**
+
+This module uses the OpenAI API. The API key must be stored securely and never hard‑coded in notebooks.
+
+### **.env file (recommended approach)**
+
+Create a `.env` file in the root of `08_llm_fundamentals`:
+
+```
+OPENAI_API_KEY=your_api_key_here
+```
+
+This file should **not** be committed to Git.
+
+### **config.py**
+
+Your `config.py` file loads the environment variable:
+
+```python
+import os
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+```
+
+### **Using the key inside notebooks**
+
+```python
+import config
+import openai
+
+openai.api_key = config.OPENAI_API_KEY
+```
+
+This approach keeps credentials secure, avoids accidental exposure, and maintains clean notebooks.
+
+---
+
+## **Key Code Concepts from gpt_models.ipynb**
 
 ### **Text Generation**
 ```python
@@ -86,14 +123,13 @@ response = openai.ChatCompletion.create(
 )
 ```
 
-### **Retrieval‑Augmented Generation**
-Includes:
+### **Retrieval‑Augmented Generation (RAG)**
 
 - Document loading  
 - Text splitting  
 - Embedding creation  
-- Vector store construction  
-- Conversational retrieval chains  
+- FAISS vector store construction  
+- Conversational retrieval for Q&A  
 
 ---
 
@@ -102,10 +138,12 @@ Includes:
 ```
 08_llm_fundamentals/
 │
-├── GPT Models.ipynb
-├── transformers_intro.ipynb          (optional placeholder)
-├── bert_question_answering.ipynb     (optional placeholder)
-├── xlnet_text_classification.ipynb   (optional placeholder)
+├── gpt_models.ipynb
+├── transformers_intro.ipynb
+├── bert_question_answering.ipynb
+├── xlnet_text_classification.ipynb
+├── config.py
+├── .env                  (not committed to Git)
 ├── requirements.txt
 └── README.md
 ```
@@ -114,7 +152,7 @@ Includes:
 
 ## **Requirements**
 
-A `requirements.txt` file accompanies this module to support reproducibility.  
+A `requirements.txt` file supports reproducibility.  
 Typical dependencies include:
 
 ```
@@ -129,7 +167,7 @@ requests
 python-dotenv
 ```
 
-Adjust the list based on the exact imports used in your notebooks.
+Adjust based on the exact imports used in your notebooks.
 
 ---
 
@@ -148,7 +186,7 @@ By completing this module, you will:
 
 ## **Next Steps**
 
-This module forms a foundation for more advanced work in:
+This module prepares you for deeper work in:
 
 - Fine‑tuning transformer models  
 - Semantic search and embedding‑based retrieval  
@@ -156,4 +194,3 @@ This module forms a foundation for more advanced work in:
 - Practical LLM engineering patterns  
 
 ---
-
