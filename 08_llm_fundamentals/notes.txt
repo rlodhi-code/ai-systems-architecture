@@ -1,0 +1,11 @@
+# Manually create 
+pip install "pydantic<2"
+pip install openai langchain langchain-community langchain-openai langchain-text-splitters
+pip install transformers datasets accelerate evaluate
+pip install torch faiss-cpu
+pip install pandas scikit-learn matplotlib seaborn sentencepiece
+pip install jupyterlab notebook ipykernel ipywidgets python-dotenv
+pip install jupyterlab notebook ipykernel ipywidgets python-dotenv
+
+pip freeze > requirements_freeze.txt
+
