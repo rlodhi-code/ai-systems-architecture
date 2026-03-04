@@ -19,3 +19,8 @@ conda activate llms_course_env_311
 
 # Environment info
 conda info
+
+# Instructions to generate requirements.txt file
+pip freeze > requirements.txt
+These requirements can be converted to just the packages list. That's how these projects are saving them. 
+
