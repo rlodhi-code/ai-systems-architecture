@@ -14,9 +14,9 @@ All environment files and dependencies are aligned specifically with this versio
 ## 🚀 How to Use  
 Follow the setup steps **exactly as provided** to ensure compatibility with the rest of the series.
 
-### Create the Conda Environment  
+### Create the Conda Environment (must create with python=3.11)
 ```bash
-conda env create -f environment.yml
+conda create --name ai-systems-architecture python=3.11
 conda activate ai-systems-architecture
 ```
 
