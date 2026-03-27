@@ -1,196 +1,226 @@
-# **LLM Fundamentals**
+# 🤖 LLM Fundamentals — GPT Models & Hugging Face Transformers
 
-This module introduces foundational concepts behind modern Large Language Models (LLMs) through practical, hands‑on notebooks. It covers GPT‑based text generation, prompt engineering, embeddings, retrieval‑augmented generation (RAG), and introductory transformer workflows. The goal is to build a working understanding of how LLMs are used, configured, and integrated into applications.
+This module provides a hands‑on introduction to **Large Language Models (LLMs)** using two complementary approaches:
 
----
+1. **OpenAI GPT Models** — API‑based inference  
+2. **Hugging Face Transformers** — local or hosted model execution  
 
-## **Module Overview**
-
-The notebooks in this folder explore several core areas of LLM development:
-
-- Text generation using GPT models  
-- Prompt design and output control  
-- Summarization and keyword extraction  
-- Conversational agents and stylistic generation  
-- Embeddings and vector stores  
-- Retrieval‑augmented generation (RAG)  
-- Introduction to transformer‑based architectures  
-- Question answering with BERT  
-- Text classification with XLNet  
-
-This module serves as a foundation for more advanced AI and NLP engineering work.
+Both notebooks demonstrate practical, real‑world usage patterns including prompting, configuration management, environment variables, and safe handling of API keys.
 
 ---
 
-## **Notebooks Included**
-
-### **1. gpt_models.ipynb**
-A hands‑on introduction to GPT‑style models, including:
-
-- API setup and authentication  
-- Secure API key loading  
-- Prompt‑based text generation  
-- Temperature, max tokens, and output shaping  
-- Summaries, keyword extraction, and structured outputs  
-- A simple poetic chatbot  
-- Embeddings and vector store creation  
-- Conversational retrieval chains for Q&A  
-
-### **2. transformers_intro.ipynb** *(placeholder)*
-Introduces transformer architectures:
-
-- Loading pretrained models  
-- Tokenization and encoding  
-- Running inference locally  
-- Comparing transformer outputs with GPT models  
-
-### **3. bert_question_answering.ipynb** *(placeholder)*
-Explores extractive question‑answering:
-
-- BERT‑based QA pipelines  
-- Handling context windows  
-- Extracting answer spans  
-- Evaluating responses  
-
-### **4. xlnet_text_classification.ipynb** *(placeholder)*
-Covers text classification using XLNet:
-
-- Loading XLNet classification models  
-- Preparing text inputs  
-- Running predictions  
-- Understanding permutation‑based modeling  
-
----
-
-## **API Key Management**
-
-This module uses the OpenAI API. The API key must be stored securely and never hard‑coded in notebooks.
-
-### **.env file (recommended approach)**
-
-Create a `.env` file in the root of `08_llm_fundamentals`:
-
-```
-OPENAI_API_KEY=your_api_key_here
-```
-
-This file should **not** be committed to Git.
-
-### **config.py**
-
-Your `config.py` file loads the environment variable:
-
-```python
-import os
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-```
-
-### **Using the key inside notebooks**
-
-```python
-import config
-import openai
-
-openai.api_key = config.OPENAI_API_KEY
-```
-
-This approach keeps credentials secure, avoids accidental exposure, and maintains clean notebooks.
-
----
-
-## **Key Code Concepts from gpt_models.ipynb**
-
-### **Text Generation**
-```python
-def generate_text(prompt):
-    response = openai.Completion.create(
-        engine="davinci-002",
-        prompt=prompt,
-        max_tokens=10,
-        temperature=0.7
-    )
-    return response.choices[0].text.strip()
-```
-
-### **Chat‑Based Summarization**
-```python
-response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "Extract keywords from the text."},
-        {"role": "user", "content": prompt}
-    ]
-)
-```
-
-### **Retrieval‑Augmented Generation (RAG)**
-
-- Document loading  
-- Text splitting  
-- Embedding creation  
-- FAISS vector store construction  
-- Conversational retrieval for Q&A  
-
----
-
-## **Folder Structure**
+## 📁 Project Structure
 
 ```
 08_llm_fundamentals/
 │
-├── gpt_models.ipynb
-├── transformers_intro.ipynb
-├── bert_question_answering.ipynb
-├── xlnet_text_classification.ipynb
-├── config.py
-├── .env                  (not committed to Git)
-├── requirements.txt
-└── README.md
+├── gpt_models.ipynb                 # OpenAI GPT examples
+├── huggingface_transformers.ipynb   # Hugging Face Transformers examples
+├── config.py                        # Loads environment variables (HF_TOKEN, etc.)
+├── .env                             # API keys (not committed)
+└── README.md                        # This file
 ```
 
 ---
 
-## **Requirements**
+# 1️⃣ GPT Models Notebook (OpenAI API)
 
-A `requirements.txt` file supports reproducibility.  
-Typical dependencies include:
+This notebook walks through how to interact with GPT models using the OpenAI Python SDK.
+
+### 🔍 Topics Covered
+
+- Setting up API keys securely  
+- Using `OpenAI()` client  
+- Chat completions  
+- System vs. user messages  
+- Temperature, max tokens, and other parameters  
+- Prompt engineering basics  
+- Error handling and rate‑limit considerations  
+
+### 🧠 Key Concepts
+
+- **Stateless API calls** — each request includes full context  
+- **Determinism vs. creativity** — controlled via temperature  
+- **Token budgeting** — important for long prompts  
+- **Model selection** — choosing between GPT‑4, GPT‑4o, GPT‑3.5, etc.  
+
+### 🔐 Environment Variables
+
+The notebook expects:
 
 ```
-openai
-langchain
-faiss-cpu
-tiktoken
-transformers
-torch
-beautifulsoup4
-requests
-python-dotenv
+OPENAI_API_KEY=your_key_here
 ```
 
-Adjust based on the exact imports used in your notebooks.
+Stored in `.env` and loaded automatically.
 
 ---
 
-## **Learning Outcomes**
+# 2️⃣ Hugging Face Transformers Notebook
 
-By completing this module, you will:
+This notebook demonstrates how to run LLMs using the **Transformers** library — either locally or via Hugging Face Inference Endpoints.
 
-- Understand how GPT models generate and structure text  
-- Learn how to shape model outputs through prompts and parameters  
-- Build simple conversational and stylistic agents  
-- Apply embeddings and vector stores for retrieval workflows  
-- Gain familiarity with transformer‑based pipelines  
-- Explore question answering and classification using BERT and XLNet  
+It includes several important comments explaining *why* certain steps are taken, how to avoid common pitfalls, and how to structure your code for clarity.
 
 ---
 
-## **Next Steps**
+## 🔧 Setup & Configuration
 
-This module prepares you for deeper work in:
+### 1. Save your Hugging Face token in `.env`
 
-- Fine‑tuning transformer models  
-- Semantic search and embedding‑based retrieval  
-- Multi‑model evaluation and comparison  
-- Practical LLM engineering patterns  
+Create a `.env` file:
+
+```
+HF_TOKEN=your_huggingface_token
+```
+
+### 2. How the token is loaded
+
+The notebook imports:
+
+```python
+from config import HF_TOKEN
+```
+
+Your `config.py` handles:
+
+- Reading `.env`
+- Validating required variables
+- Exposing them as Python constants
+
+This keeps notebooks clean and avoids hard‑coding secrets.
+
+---
+
+## 🚀 Topics Covered in the Transformers Notebook
+
+### ✔️ Loading Models & Tokenizers
+
+- AutoModelForCausalLM  
+- AutoTokenizer  
+- Pipeline API  
+- Device mapping (CPU/GPU/MPS)  
+
+### ✔️ Running Inference
+
+- Text generation  
+- Adjusting max_length, temperature, top_p  
+- Batch inference  
+- Handling long prompts  
+
+### ✔️ Using Hugging Face Hub
+
+- Authenticating with `HF_TOKEN`  
+- Loading private models  
+- Pulling models from the Hub  
+- Understanding model sizes & hardware requirements  
+
+### ✔️ Performance Considerations
+
+- GPU vs CPU execution  
+- Quantization (8‑bit, 4‑bit)  
+- Memory footprint  
+- Why some models load slowly  
+
+### ✔️ Practical Notes Included in the Notebook
+
+The notebook contains several helpful comments such as:
+
+- Why tokenizers must match the model  
+- Why pipelines simplify inference for beginners  
+- How to avoid out‑of‑memory errors  
+- Why some models require `trust_remote_code=True`  
+- When to use local inference vs hosted endpoints  
+
+All of these insights are preserved and reflected in this README.
+
+---
+
+# 🔒 Security & Environment Management
+
+### `.env` is required for both notebooks
+
+```
+OPENAI_API_KEY=...
+HF_TOKEN=...
+```
+
+### `.env` is **never committed**  
+Your `.gitignore` already protects it.
+
+### `config.py` centralizes all secrets  
+This ensures:
+
+- No secrets inside notebooks  
+- Cleaner code  
+- Easier debugging  
+- Consistent environment handling  
+
+---
+
+# ▶️ How to Run the Notebooks
+
+### 1. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Create `.env`
+
+```env
+OPENAI_API_KEY=your_openai_key
+HF_TOKEN=your_hf_token
+```
+
+### 3. Start Jupyter
+
+```bash
+jupyter notebook
+```
+
+Open:
+
+- `gpt_models.ipynb`
+- `huggingface_transformers.ipynb`
+
+Run cells top‑to‑bottom.
+
+---
+
+# 📘 Learning Outcomes
+
+By completing both notebooks, you will understand:
+
+### 🧩 GPT Models (OpenAI)
+- How to call hosted LLMs via API  
+- How to structure prompts  
+- How to control model behavior  
+- How to manage tokens and cost  
+
+### 🧩 Hugging Face Transformers
+- How to run models locally  
+- How to load models from the Hub  
+- How tokenizers and models work together  
+- How to configure generation parameters  
+- How to authenticate and access private models  
+
+### 🧩 Combined Understanding
+You now have a complete view of:
+
+- **Hosted LLMs** (OpenAI)  
+- **Local / open‑source LLMs** (Transformers)  
+- **Secure configuration**  
+- **Practical inference workflows**  
+
+---
+
+# ⭐ Future Enhancements
+
+- Add examples using **Hugging Face Inference Endpoints**  
+- Add quantization examples (4‑bit, 8‑bit)  
+- Add RAG (Retrieval‑Augmented Generation) demo  
+- Add evaluation metrics (BLEU, ROUGE, perplexity)  
+- Add comparison of model families (LLaMA, Mistral, Phi‑3, etc.)  
 
 ---
