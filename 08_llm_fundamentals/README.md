@@ -1,11 +1,12 @@
-# 🤖 LLM Fundamentals — GPT Models & Hugging Face Transformers
+# 🤖 LLM Fundamentals — GPT, Transformers & BERT‑Based Q&A
 
-This module provides a hands‑on introduction to **Large Language Models (LLMs)** using two complementary approaches:
+This module provides a practical, hands‑on introduction to **Large Language Models (LLMs)** using three complementary approaches:
 
-1. **OpenAI GPT Models** — API‑based inference  
-2. **Hugging Face Transformers** — local or hosted model execution  
+1. **GPT Models (OpenAI API)**  
+2. **Hugging Face Transformers (local + Hub)**  
+3. **BERT‑based Question Answering (BERT, RoBERTa, DistilBERT)**  
 
-Both notebooks demonstrate practical, real‑world usage patterns including prompting, configuration management, environment variables, and safe handling of API keys.
+Each notebook focuses on a different layer of the LLM ecosystem, helping developers understand both **how models work** and **how to use them effectively**.
 
 ---
 
@@ -14,213 +15,196 @@ Both notebooks demonstrate practical, real‑world usage patterns including prom
 ```
 08_llm_fundamentals/
 │
-├── gpt_models.ipynb                 # OpenAI GPT examples
-├── huggingface_transformers.ipynb   # Hugging Face Transformers examples
-├── config.py                        # Loads environment variables (HF_TOKEN, etc.)
-├── .env                             # API keys (not committed)
-└── README.md                        # This file
+├── 01_gpt_models.ipynb
+├── 02_huggingface_transformers.ipynb
+├── 03_bert_qa_models.ipynb
+│
+├── config.py
+├── .env
+└── README.md
 ```
 
 ---
 
-# 1️⃣ GPT Models Notebook (OpenAI API)
+# 1️⃣ GPT Models (OpenAI API)
 
-This notebook walks through how to interact with GPT models using the OpenAI Python SDK.
+Notebook: **`01_gpt_models.ipynb`**
+
+This notebook introduces GPT models using the OpenAI Python SDK.
 
 ### 🔍 Topics Covered
-
-- Setting up API keys securely  
-- Using `OpenAI()` client  
+- API setup and authentication  
 - Chat completions  
 - System vs. user messages  
-- Temperature, max tokens, and other parameters  
+- Temperature, max tokens, top‑p  
 - Prompt engineering basics  
-- Error handling and rate‑limit considerations  
-
-### 🧠 Key Concepts
-
-- **Stateless API calls** — each request includes full context  
-- **Determinism vs. creativity** — controlled via temperature  
-- **Token budgeting** — important for long prompts  
-- **Model selection** — choosing between GPT‑4, GPT‑4o, GPT‑3.5, etc.  
+- Error handling and rate limits  
 
 ### 🔐 Environment Variables
-
-The notebook expects:
+Stored in `.env`:
 
 ```
 OPENAI_API_KEY=your_key_here
 ```
 
-Stored in `.env` and loaded automatically.
+Loaded automatically through `config.py`.
 
 ---
 
-# 2️⃣ Hugging Face Transformers Notebook
+# 2️⃣ Hugging Face Transformers
 
-This notebook demonstrates how to run LLMs using the **Transformers** library — either locally or via Hugging Face Inference Endpoints.
+Notebook: **`02_huggingface_transformers.ipynb`**
 
-It includes several important comments explaining *why* certain steps are taken, how to avoid common pitfalls, and how to structure your code for clarity.
+This notebook demonstrates how to load and run models using the **Transformers** library.
 
----
+### 🚀 Topics Covered
+- AutoTokenizer & AutoModel  
+- Pipelines for text generation  
+- CPU vs GPU execution  
+- Loading models from the Hugging Face Hub  
+- Understanding model sizes and memory requirements  
+- Why tokenizers must match the model  
+- Avoiding OOM errors  
+- When to use `trust_remote_code=True`  
 
-## 🔧 Setup & Configuration
-
-### 1. Save your Hugging Face token in `.env`
-
-Create a `.env` file:
+### 🔐 HF Token Setup
+Add this to `.env`:
 
 ```
 HF_TOKEN=your_huggingface_token
 ```
 
-### 2. How the token is loaded
-
-The notebook imports:
+`config.py` loads it at runtime:
 
 ```python
 from config import HF_TOKEN
 ```
 
-Your `config.py` handles:
-
-- Reading `.env`
-- Validating required variables
-- Exposing them as Python constants
-
 This keeps notebooks clean and avoids hard‑coding secrets.
 
 ---
 
-## 🚀 Topics Covered in the Transformers Notebook
+# 3️⃣ BERT‑Based Question Answering  
+Notebook: **`03_bert_qa_models.ipynb`**
 
-### ✔️ Loading Models & Tokenizers
+This notebook demonstrates how to build a **Question Answering (QA)** system using:
 
-- AutoModelForCausalLM  
-- AutoTokenizer  
-- Pipeline API  
-- Device mapping (CPU/GPU/MPS)  
+- `BertForQuestionAnswering`  
+- `BertTokenizer`  
+- A SQuAD‑fine‑tuned checkpoint  
 
-### ✔️ Running Inference
+### 🧠 What the notebook teaches
+- How BERT performs span‑based QA  
+- How to tokenize context + question pairs  
+- How to interpret start/end logits  
+- How to extract the predicted answer span  
+- How to run inference on custom text  
 
-- Text generation  
-- Adjusting max_length, temperature, top_p  
-- Batch inference  
-- Handling long prompts  
+### 📌 Models Covered (Conceptually)
+Although the notebook uses **BERT**, the same workflow applies to:
 
-### ✔️ Using Hugging Face Hub
+| Model | Architecture | Notes |
+|-------|--------------|-------|
+| **BERT** | Encoder‑only | Bidirectional, strong for QA |
+| **RoBERTa** | Encoder‑only | Improved training, often higher accuracy |
+| **DistilBERT** | Encoder‑only | Lightweight, faster, 40% smaller |
 
-- Authenticating with `HF_TOKEN`  
-- Loading private models  
-- Pulling models from the Hub  
-- Understanding model sizes & hardware requirements  
+### 🧩 Why developers can easily extend to RoBERTa & DistilBERT
+The only changes required are:
 
-### ✔️ Performance Considerations
+```python
+from transformers import AutoTokenizer, AutoModelForQuestionAnswering
 
-- GPU vs CPU execution  
-- Quantization (8‑bit, 4‑bit)  
-- Memory footprint  
-- Why some models load slowly  
+model_name = "deepset/roberta-base-squad2"
+# or
+model_name = "distilbert-base-uncased-distilled-squad"
 
-### ✔️ Practical Notes Included in the Notebook
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForQuestionAnswering.from_pretrained(model_name)
+```
 
-The notebook contains several helpful comments such as:
+Everything else — tokenization, encoding, logits, span extraction — stays the same.
 
-- Why tokenizers must match the model  
-- Why pipelines simplify inference for beginners  
-- How to avoid out‑of‑memory errors  
-- Why some models require `trust_remote_code=True`  
-- When to use local inference vs hosted endpoints  
-
-All of these insights are preserved and reflected in this README.
+This makes the notebook a perfect foundation for experimenting with multiple QA models.
 
 ---
 
 # 🔒 Security & Environment Management
 
-### `.env` is required for both notebooks
-
+### `.env` contains:
 ```
 OPENAI_API_KEY=...
 HF_TOKEN=...
 ```
 
-### `.env` is **never committed**  
-Your `.gitignore` already protects it.
+### `config.py` handles:
+- Loading environment variables  
+- Validating required keys  
+- Exposing them as Python constants  
 
-### `config.py` centralizes all secrets  
-This ensures:
-
-- No secrets inside notebooks  
-- Cleaner code  
-- Easier debugging  
-- Consistent environment handling  
+This keeps your notebooks clean, secure, and production‑friendly.
 
 ---
 
 # ▶️ How to Run the Notebooks
 
 ### 1. Install dependencies
-
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 2. Create `.env`
-
 ```env
 OPENAI_API_KEY=your_openai_key
 HF_TOKEN=your_hf_token
 ```
 
-### 3. Start Jupyter
-
+### 3. Launch Jupyter
 ```bash
 jupyter notebook
 ```
 
-Open:
-
-- `gpt_models.ipynb`
-- `huggingface_transformers.ipynb`
-
-Run cells top‑to‑bottom.
+Open any notebook and run cells top‑to‑bottom.
 
 ---
 
 # 📘 Learning Outcomes
 
-By completing both notebooks, you will understand:
+By completing this module, developers will understand:
 
-### 🧩 GPT Models (OpenAI)
-- How to call hosted LLMs via API  
-- How to structure prompts  
-- How to control model behavior  
-- How to manage tokens and cost  
+### 🧩 GPT Models
+- Hosted inference  
+- Prompting  
+- Token budgeting  
+- Model selection  
 
-### 🧩 Hugging Face Transformers
-- How to run models locally  
-- How to load models from the Hub  
-- How tokenizers and models work together  
-- How to configure generation parameters  
-- How to authenticate and access private models  
+### 🧩 Transformers
+- Local inference  
+- Tokenizers  
+- Pipelines  
+- Model loading from the Hub  
+
+### 🧩 BERT‑Based QA
+- Span‑based question answering  
+- How encoder‑only models differ from GPT  
+- How to switch between BERT, RoBERTa, and DistilBERT  
 
 ### 🧩 Combined Understanding
-You now have a complete view of:
+You now have a complete foundation in:
 
-- **Hosted LLMs** (OpenAI)  
-- **Local / open‑source LLMs** (Transformers)  
-- **Secure configuration**  
-- **Practical inference workflows**  
+- Decoder‑only models (GPT)  
+- Encoder‑only models (BERT family)  
+- Hugging Face ecosystem  
+- Practical inference workflows  
 
 ---
 
-# ⭐ Future Enhancements
+# ⭐ Next Steps
 
-- Add examples using **Hugging Face Inference Endpoints**  
-- Add quantization examples (4‑bit, 8‑bit)  
-- Add RAG (Retrieval‑Augmented Generation) demo  
-- Add evaluation metrics (BLEU, ROUGE, perplexity)  
-- Add comparison of model families (LLaMA, Mistral, Phi‑3, etc.)  
+- Add RoBERTa and DistilBERT examples  
+- Add XLNet for permutation‑based language modeling  
+- Add a comparison notebook: **GPT vs BERT vs XLNet**  
+- Add a RAG demo (Retrieval‑Augmented Generation)  
+- Add LangChain & LangGraph in the next module (`09_llm_application_frameworks`)  
 
 ---
