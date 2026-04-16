@@ -1,12 +1,14 @@
-# 🤖 LLM Fundamentals — GPT, Transformers & BERT‑Based Q&A
+# 🤖 LLM Fundamentals — GPT, Transformers, BERT QA & XLNet Classification
 
-This module provides a practical, hands‑on introduction to **Large Language Models (LLMs)** using three complementary approaches:
+This module provides a structured, hands‑on introduction to **Large Language Models (LLMs)** and modern NLP techniques.  
+It covers four major pillars:
 
 1. **GPT Models (OpenAI API)**  
 2. **Hugging Face Transformers (local + Hub)**  
-3. **BERT‑based Question Answering (BERT, RoBERTa, DistilBERT)**  
+3. **BERT‑family Question Answering (BERT, RoBERTa, DistilBERT)**  
+4. **Classical ML vs XLNet for Text Classification**  
 
-Each notebook focuses on a different layer of the LLM ecosystem, helping developers understand both **how models work** and **how to use them effectively**.
+Each notebook builds on the previous one, giving developers a clear path from API‑based inference → local model execution → task‑specific architectures → classical vs transformer‑based NLP.
 
 ---
 
@@ -18,17 +20,20 @@ Each notebook focuses on a different layer of the LLM ecosystem, helping develop
 ├── 01_gpt_models.ipynb
 ├── 02_huggingface_transformers.ipynb
 ├── 03_bert_qa_models.ipynb
+├── 04_text_classification_classical_vs_xlnet.ipynb
 │
 ├── config.py
 ├── .env
 └── README.md
 ```
 
+Your filenames are **clear, consistent, and do NOT need to be changed**.
+
 ---
 
 # 1️⃣ GPT Models (OpenAI API)
 
-Notebook: **`01_gpt_models.ipynb`**
+**Notebook:** `01_gpt_models.ipynb`
 
 This notebook introduces GPT models using the OpenAI Python SDK.
 
@@ -47,13 +52,13 @@ Stored in `.env`:
 OPENAI_API_KEY=your_key_here
 ```
 
-Loaded automatically through `config.py`.
+Loaded via `config.py`.
 
 ---
 
 # 2️⃣ Hugging Face Transformers
 
-Notebook: **`02_huggingface_transformers.ipynb`**
+**Notebook:** `02_huggingface_transformers.ipynb`
 
 This notebook demonstrates how to load and run models using the **Transformers** library.
 
@@ -64,7 +69,7 @@ This notebook demonstrates how to load and run models using the **Transformers**
 - Loading models from the Hugging Face Hub  
 - Understanding model sizes and memory requirements  
 - Why tokenizers must match the model  
-- Avoiding OOM errors  
+- Avoiding out‑of‑memory errors  
 - When to use `trust_remote_code=True`  
 
 ### 🔐 HF Token Setup
@@ -74,18 +79,17 @@ Add this to `.env`:
 HF_TOKEN=your_huggingface_token
 ```
 
-`config.py` loads it at runtime:
+Loaded automatically via:
 
 ```python
 from config import HF_TOKEN
 ```
 
-This keeps notebooks clean and avoids hard‑coding secrets.
-
 ---
 
-# 3️⃣ BERT‑Based Question Answering  
-Notebook: **`03_bert_qa_models.ipynb`**
+# 3️⃣ BERT‑Family Question Answering (BERT, RoBERTa, DistilBERT)
+
+**Notebook:** `03_bert_qa_models.ipynb`
 
 This notebook demonstrates how to build a **Question Answering (QA)** system using:
 
@@ -94,14 +98,15 @@ This notebook demonstrates how to build a **Question Answering (QA)** system usi
 - A SQuAD‑fine‑tuned checkpoint  
 
 ### 🧠 What the notebook teaches
-- How BERT performs span‑based QA  
+- How encoder‑only models perform span‑based QA  
 - How to tokenize context + question pairs  
 - How to interpret start/end logits  
 - How to extract the predicted answer span  
 - How to run inference on custom text  
 
-### 📌 Models Covered (Conceptually)
-Although the notebook uses **BERT**, the same workflow applies to:
+### 📌 BERT, RoBERTa & DistilBERT — All Supported
+
+The notebook currently uses **BERT**, but developers can easily switch to:
 
 | Model | Architecture | Notes |
 |-------|--------------|-------|
@@ -109,23 +114,52 @@ Although the notebook uses **BERT**, the same workflow applies to:
 | **RoBERTa** | Encoder‑only | Improved training, often higher accuracy |
 | **DistilBERT** | Encoder‑only | Lightweight, faster, 40% smaller |
 
-### 🧩 Why developers can easily extend to RoBERTa & DistilBERT
-The only changes required are:
+### 🔄 Switching models
+Replace:
 
 ```python
-from transformers import AutoTokenizer, AutoModelForQuestionAnswering
+model_name = "bert-large-uncased-whole-word-masking-finetuned-squad"
+```
 
+With:
+
+```python
 model_name = "deepset/roberta-base-squad2"
 # or
 model_name = "distilbert-base-uncased-distilled-squad"
-
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForQuestionAnswering.from_pretrained(model_name)
 ```
 
-Everything else — tokenization, encoding, logits, span extraction — stays the same.
+Everything else stays the same.
 
-This makes the notebook a perfect foundation for experimenting with multiple QA models.
+---
+
+# 4️⃣ Classical ML vs XLNet for Text Classification
+
+**Notebook:** `04_text_classification_classical_vs_xlnet.ipynb`
+
+This notebook compares **traditional NLP classifiers** with **XLNet**, a permutation‑based transformer model.
+
+### 🧩 Classical ML Models Covered
+- Logistic Regression  
+- Naive Bayes  
+- Support Vector Machines  
+- TF‑IDF vectorization  
+- Bag‑of‑Words vs n‑grams  
+
+### 🧩 XLNet Topics Covered
+- XLNet architecture (permutation language modeling)  
+- Tokenization with `XLNetTokenizer`  
+- Sequence classification with `XLNetForSequenceClassification`  
+- Fine‑tuning vs zero‑shot usage  
+- Performance comparison with classical ML  
+
+### 🎯 What developers learn
+- When classical ML still performs well  
+- When transformers outperform traditional methods  
+- How XLNet differs from BERT and GPT  
+- How to evaluate classification models  
+
+This notebook is a perfect bridge between **traditional NLP** and **modern transformer‑based NLP**.
 
 ---
 
@@ -164,7 +198,7 @@ HF_TOKEN=your_hf_token
 jupyter notebook
 ```
 
-Open any notebook and run cells top‑to‑bottom.
+Run any notebook top‑to‑bottom.
 
 ---
 
@@ -184,16 +218,24 @@ By completing this module, developers will understand:
 - Pipelines  
 - Model loading from the Hub  
 
-### 🧩 BERT‑Based QA
+### 🧩 BERT‑Family QA
 - Span‑based question answering  
-- How encoder‑only models differ from GPT  
+- Encoder‑only architectures  
 - How to switch between BERT, RoBERTa, and DistilBERT  
+
+### 🧩 Classical ML vs XLNet
+- Traditional NLP pipelines  
+- Transformer‑based classification  
+- XLNet’s permutation modeling  
+- Practical performance comparisons  
 
 ### 🧩 Combined Understanding
 You now have a complete foundation in:
 
 - Decoder‑only models (GPT)  
 - Encoder‑only models (BERT family)  
+- Permutation‑based models (XLNet)  
+- Classical NLP vs modern LLMs  
 - Hugging Face ecosystem  
 - Practical inference workflows  
 
@@ -201,10 +243,11 @@ You now have a complete foundation in:
 
 # ⭐ Next Steps
 
-- Add RoBERTa and DistilBERT examples  
-- Add XLNet for permutation‑based language modeling  
+- Add RoBERTa and DistilBERT examples to the QA notebook  
+- Add XLNet fine‑tuning examples  
 - Add a comparison notebook: **GPT vs BERT vs XLNet**  
 - Add a RAG demo (Retrieval‑Augmented Generation)  
 - Add LangChain & LangGraph in the next module (`09_llm_application_frameworks`)  
 
 ---
+
