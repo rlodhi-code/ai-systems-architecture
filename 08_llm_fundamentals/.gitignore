@@ -1,6 +1,8 @@
 .ipynb_checkpoints/
 __pycache__/
 my_saved_models/
+test_trainer/
+fine_tuned_model/
 *.pyc
 .env
 .env/
