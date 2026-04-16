@@ -9,3 +9,7 @@ pip install jupyterlab notebook ipykernel ipywidgets python-dotenv
 
 pip freeze > requirements_freeze.txt
 
+#04/15/2026 for xlnet
+conda activate llms_course_env_311
+pip install clean-text
+pip install unidecode
