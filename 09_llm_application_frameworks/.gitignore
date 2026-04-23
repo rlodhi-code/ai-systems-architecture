@@ -1,6 +1,7 @@
 .ipynb_checkpoints/
 __pycache__/
 my_saved_models/
+langchain_module_files/
 *.pyc
 .env
 .env/
