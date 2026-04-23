@@ -8,6 +8,8 @@ pip install openai python-dotenv ipykernel jupyterlab notebook
 python -m ipykernel install --user --name langchain_env
 pip install langchain==0.2.8
 pip install langchain-openai==0.1.7
+pip install chardet
+
 
 
 
