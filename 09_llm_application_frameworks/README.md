@@ -200,17 +200,73 @@ It shows how to mix **LLM steps + Python logic** in one pipeline.
 
 ---
 
-# 5️⃣ The `@chain` Decorator  
-The decorator turns a Python function into an LCEL chain automatically.
+# 🧩 The `@chain` Decorator — Turning Python Functions into LCEL Chains
 
-It simplifies:
+The `@chain` decorator is the final LCEL building block introduced in your notebook.  
+It provides a clean, elegant way to convert a normal Python function into a **Runnable** that can be piped, composed, and executed just like any other LCEL component.
 
-- readability  
-- debugging  
-- reuse  
-- modular design  
+### ✔ What the `@chain` decorator does  
+When you write:
 
-Perfect for production‑grade pipelines.
+```python
+@chain
+def my_step(x):
+    return x.upper()
+```
+
+LangChain automatically:
+
+- wraps your function inside a Runnable  
+- adds LCEL execution behavior  
+- enables `.invoke()`, `.batch()`, `.stream()`  
+- makes the function compatible with `|` piping  
+- preserves metadata for debugging and graphing  
+
+This means your function is no longer a plain Python function — it becomes a **chain step**.
+
+### ✔ Why it “runs”  
+Because after decoration, the function behaves like a Runnable.  
+Calling it triggers LCEL execution, not normal Python execution.
+
+This is intentional:  
+it allows your function to participate in the same pipeline as prompts, models, parsers, and other runnables.
+
+### ✔ Why it’s useful  
+The decorator makes LCEL pipelines:
+
+- cleaner  
+- more readable  
+- easier to debug  
+- easier to reuse  
+- easier to compose  
+
+Instead of manually wrapping logic in `RunnableLambda`, you can write:
+
+```python
+@chain
+def clean_text(x):
+    return x.strip()
+```
+
+And then use it like:
+
+```python
+clean_text | model | parser
+```
+
+### ✔ How it fits into your notebook  
+Your notebook now covers:
+
+- Runnable  
+- RunnableSequence  
+- RunnableParallel  
+- Piping RunnableParallel with other runnables  
+- RunnableLambda  
+- **@chain decorator**  
+
+The decorator is the final piece because it shows how to build **modular, Python‑native LCEL steps** without extra boilerplate.
+
+---
 
 ---
 
@@ -242,3 +298,10 @@ By completing this module, developers will understand:
 - Preparing for LangGraph state machines  
 
 ---
+
+
+
+
+
+
+
