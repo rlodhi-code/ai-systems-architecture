@@ -1,198 +1,158 @@
-# 🧠 System, Human, and AI Messages — Prompting Foundations
+# 🧠 LangChain Application Frameworks — LCEL, Runnables & Prompting
 
-This notebook introduces one of the most important concepts in modern LLM application development: **structured prompting using system, human, and AI messages**.  
-It demonstrates how message roles influence model behavior, how to design effective prompts, and how to use few‑shot examples to guide the model toward consistent outputs.
+This module introduces the practical building blocks required to create production‑grade LLM applications using **LangChain** and **LangChain Expression Language (LCEL)**.  
+It expands on structured prompting (system/human/AI messages) and moves into **composable, debuggable, graph‑based LLM pipelines**.
 
-This is part of the `09_llm_application_frameworks` module, which focuses on building real LLM applications using structured prompting patterns.
+This folder now includes:
 
----
-
-## 📌 What This Notebook Covers
-
-### ✔️ System / Human / AI message roles  
-### ✔️ Why sarcasm and tone‑based examples matter  
-### ✔️ How system messages enforce rules  
-### ✔️ How AI messages shape model behavior  
-### ✔️ Few‑shot prompting  
-### ✔️ Prompt templates & prompt values  
-### ✔️ Practical examples for real applications  
+- Structured prompting with system/human/AI messages  
+- LCEL pipelines  
+- Runnables (Sequence, Parallel, Lambda)  
+- Passthroughs  
+- Batching  
+- Streaming  
+- Graphing runnable chains  
+- The `@chain` decorator  
 
 ---
 
-## 🧱 Message Roles in LLM Applications
+## 📁 Project Structure
 
-Modern LLM frameworks (OpenAI, LangChain, LangGraph, etc.) use **role‑based messages** to structure conversations.
-
-### **1. System Messages**
-These define the *rules*, *persona*, and *boundaries* for the model.
-
-Examples:
-- “You are a helpful assistant.”
-- “Respond concisely and avoid unnecessary details.”
-- “Use a professional tone.”
-
-System messages act as the **highest‑priority instruction layer**.  
-They shape the model’s behavior before any user input is processed.
-
-### **2. Human Messages**
-These represent the **user’s actual request**.
-
-Examples:
-- “Explain quantum computing.”
-- “Write a sarcastic response to this sentence.”
-- “Summarize this article.”
-
-Human messages are the *questions* or *commands* the model must respond to.
-
-### **3. AI Messages**
-These represent the **model’s previous responses**.
-
-They help maintain:
-- conversation history  
-- tone consistency  
-- memory of earlier steps  
-- multi‑turn reasoning  
-
-AI messages are essential for **stateful conversations** and **agent workflows**.
+```
+09_llm_application_frameworks/
+│
+├── 01_model_system_human_ai_messages.ipynb
+├── 02_lcel_runnables_and_chains.ipynb
+│
+└── README.md
+```
 
 ---
 
-## 🎭 Why Sarcasm Is Included in the Examples
+# 1️⃣ System, Human, and AI Messages
 
-Sarcasm is intentionally included because:
+Notebook: **`01_model_system_human_ai_messages.ipynb`**
 
-### ✔️ It tests the model’s ability to understand **tone**
-Sarcasm requires:
-- contextual understanding  
-- emotional nuance  
+This notebook introduces structured prompting using message roles:
+
+### ✔ System Messages  
+Define rules, persona, tone, and constraints.  
+They act as the highest‑priority instruction layer.
+
+### ✔ Human Messages  
+Represent the user’s actual request.
+
+### ✔ AI Messages  
+Store the model’s previous responses, enabling multi‑turn reasoning.
+
+### 🎭 Why Sarcasm Is Included  
+Sarcasm is intentionally used because it tests:
+
+- tone understanding  
+- contextual reasoning  
 - implicit meaning  
+- instruction hierarchy (system > human)  
 
-This makes it a strong test of model capability.
+It demonstrates how system messages override user requests and how tone can be controlled through examples.
 
-### ✔️ It demonstrates **style transfer**
-Developers often need models to:
-- mimic a tone  
-- rewrite text in a specific style  
-- generate creative responses  
+### 🧩 Few‑Shot Prompting  
+The notebook includes examples showing how providing 2–3 demonstrations helps the model:
 
-Sarcasm is a clear, exaggerated example.
+- mimic tone  
+- follow formatting  
+- produce consistent outputs  
+- learn task patterns  
 
-### ✔️ It shows how **system messages constrain behavior**
-If the system message says:
-> “Avoid sarcasm.”
+### 🧩 Prompt Templates & Prompt Values  
+Developers learn how to:
 
-…and the human message asks for sarcasm,  
-the model must follow the system instruction.
-
-This teaches developers how **instruction hierarchy** works.
-
----
-
-## 🧩 Few‑Shot Prompting
-
-Few‑shot prompting means giving the model **examples** of the behavior you want.
-
-Example:
-
-```
-System: You are a polite assistant.
-Human: Rewrite the sentence politely.
-Human: "Close the door."
-AI: "Could you please close the door?"
-```
-
-Then the next request:
-
-```
-Human: "Move your car."
-```
-
-The model learns from the example and responds politely.
-
-Few‑shot prompting helps with:
-- tone control  
-- formatting consistency  
-- classification tasks  
-- structured outputs  
-- style imitation  
-
-This notebook includes several few‑shot examples to demonstrate how the model learns patterns.
+- define reusable prompt structures  
+- inject dynamic values  
+- separate logic from content  
+- prepare prompts for LangChain chains  
 
 ---
 
-## 🧩 Prompt Templates & Prompt Values
+# 2️⃣ LangChain Expression Language (LCEL) & Runnables
 
-Prompt templates allow developers to **reuse prompt structures** with dynamic values.
+Notebook: **`02_lcel_runnables_and_chains.ipynb`**  
+(**Recommended name — clean, descriptive, and scalable**)
 
-### Example Template
+This notebook covers the LCEL components shown in your screenshot.
 
-```python
-template = """
-You are a helpful assistant.
+### ✔ Piping a prompt → model → output parser  
+The core LCEL pattern:
 
-Task: {task}
-Input: {input_text}
-
-Respond clearly and concisely.
-"""
+```
+prompt | model | parser
 ```
 
-### Example Prompt Values
+This creates a clean, readable, debuggable chain.
 
-```python
-prompt = template.format(
-    task="Summarize the text",
-    input_text="Large language models are transforming AI..."
-)
-```
+### ✔ Batching  
+Run multiple inputs through the same chain efficiently.
 
-This approach is essential for:
-- LangChain  
-- LangGraph  
-- production‑grade LLM apps  
-- multi‑step pipelines  
-- agent workflows  
+### ✔ Streaming  
+Stream tokens as they are generated — essential for chat UIs.
 
-Prompt templates ensure:
-- consistency  
-- maintainability  
-- clean separation of logic and content  
+### ✔ Runnable & RunnableSequence  
+The building blocks of LCEL:
+
+- `Runnable` = a single step  
+- `RunnableSequence` = a pipeline of steps  
+
+### ✔ RunnablePassthrough  
+Allows you to pass original inputs forward while adding new fields.  
+Useful for multi‑input chains.
+
+### ✔ Graphing Runnables  
+Visualize your chain as a graph to understand execution flow.
+
+### ✔ RunnableParallel  
+Run multiple branches at the same time.  
+Great for:
+
+- generating multiple summaries  
+- running multiple models  
+- combining embeddings + metadata  
+
+### ✔ Piping RunnableParallel with other Runnables  
+Compose parallel branches into larger pipelines.
+
+### ✔ RunnableLambda  
+Wrap custom Python functions inside LCEL.
+
+### ✔ The `@chain` Decorator  
+Turn Python functions into LCEL chains automatically.
 
 ---
 
-## 📘 Learning Outcomes
+# 📘 Learning Outcomes
 
-By completing this notebook, developers will understand:
+By completing this module, developers will understand:
 
-### 🧩 Prompting Foundations
-- How system, human, and AI messages interact  
-- How message roles influence model behavior  
-- Why tone‑based examples (like sarcasm) matter  
-
-### 🧩 Prompt Engineering Techniques
+### 🧩 Prompting Foundations  
+- System/human/AI messages  
 - Few‑shot prompting  
-- Style and tone control  
-- Instruction hierarchy  
+- Tone control (including sarcasm)  
+- Prompt templates & values  
 
-### 🧩 Application‑Level Concepts
-- Prompt templates  
-- Prompt values  
-- Reusable prompt structures  
-- How these patterns feed into LangChain and LangGraph  
+### 🧩 LCEL Foundations  
+- Runnables  
+- RunnableSequence  
+- RunnableParallel  
+- RunnableLambda  
+- Passthroughs  
+- Streaming  
+- Batching  
+- Graphing chains  
+- The `@chain` decorator  
 
----
-
-## 🚀 Next Steps
-
-After this notebook, you are ready to explore:
-
-- **LangChain chains & prompt templates**  
-- **LangGraph state machines**  
-- **RAG (Retrieval‑Augmented Generation)**  
-- **Agent workflows**  
-- **Tool calling & multi‑step reasoning**  
-
-This notebook sets the foundation for building real LLM applications.
+### 🧩 Application‑Level Skills  
+- Building modular LLM pipelines  
+- Debugging chain execution  
+- Combining Python logic with LLM steps  
+- Preparing for LangGraph state machines  
 
 ---
 
