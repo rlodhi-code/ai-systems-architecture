@@ -1,20 +1,7 @@
 # 🧠 LangChain Application Frameworks — Prompting, LCEL & Runnables
 
-This module introduces the practical building blocks required to create production‑grade LLM applications using **LangChain** and **LangChain Expression Language (LCEL)**.  
-It expands on structured prompting (system/human/AI messages) and moves into **composable, debuggable, graph‑based LLM pipelines**.
-
-This folder includes:
-
-- Structured prompting  
-- Few‑shot prompting  
-- Prompt templates  
-- LCEL pipelines  
-- Runnables (Sequence, Parallel, Lambda)  
-- Passthroughs  
-- Batching  
-- Streaming  
-- Graphing runnable chains  
-- The `@chain` decorator  
+This module provides a practical introduction to building LLM applications using **LangChain** and the **LangChain Expression Language (LCEL)**.  
+It covers structured prompting, message roles, few‑shot prompting, prompt templates, and the full suite of LCEL components for constructing modular, debuggable LLM pipelines.
 
 ---
 
@@ -31,55 +18,102 @@ This folder includes:
 
 ---
 
-# 1️⃣ System, Human, and AI Messages
+# ⚙️ Environment Setup
 
-**Notebook:** `01_model_system_human_ai_messages.ipynb`
+A dedicated environment is recommended for this module to ensure compatibility with LangChain and related packages.
 
-This notebook introduces structured prompting using message roles:
+### **Create a new Conda environment**
 
-### ✔ System Messages  
-Define rules, persona, tone, and constraints.  
-They act as the highest‑priority instruction layer.
+```bash
+conda create --name langchain_env python=3.10.10
+activate langchain_env
+```
 
-### ✔ Human Messages  
-Represent the user’s actual request.
+### **Verify Python version**
 
-### ✔ AI Messages  
-Store the model’s previous responses, enabling multi‑turn reasoning.
+```bash
+python -V
+```
+
+### **Install core dependencies**
+
+```bash
+pip install openai python-dotenv ipykernel jupyterlab notebook
+```
+
+### **Register the environment as a Jupyter kernel**
+
+```bash
+python -m ipykernel install --user --name langchain_env
+```
+
+### **Install LangChain and related libraries**
+
+```bash
+pip install langchain==0.2.8
+pip install langchain-openai==0.1.7
+pip install chardet
+pip install grandalf
+```
+
+**Note:**  
+`grandalf` is required for LCEL graph visualization (graphing runnable pipelines).
 
 ---
 
-## 🎭 Why Sarcasm Is Included  
-Sarcasm is intentionally used because it tests:
+# 1️⃣ Structured Prompting — System, Human, and AI Messages
+
+**Notebook:** `01_model_system_human_ai_messages.ipynb`
+
+This notebook introduces the message‑role structure used by modern LLM frameworks.
+
+### **System Messages**
+Define rules, tone, persona, and constraints.  
+They act as the highest‑priority instruction layer.
+
+### **Human Messages**
+Represent the user’s request or input.
+
+### **AI Messages**
+Store previous model responses, enabling multi‑turn reasoning and conversation continuity.
+
+---
+
+## 🎭 Sarcasm and Tone Control
+
+Sarcasm is included as an example because it demonstrates:
 
 - tone understanding  
 - contextual reasoning  
 - implicit meaning  
 - instruction hierarchy (system > human)  
 
-It demonstrates how system messages override user requests and how tone can be controlled through examples.
+It highlights how system messages can override or shape stylistic behavior.
 
 ---
 
-## 🧩 Few‑Shot Prompting  
-Few‑shot prompting provides 2–3 examples to teach the model:
+## 🧩 Few‑Shot Prompting
 
-- tone  
-- formatting  
-- structure  
-- task patterns  
+Few‑shot prompting provides example inputs and outputs to guide the model toward:
 
-This dramatically improves consistency and accuracy.
+- consistent formatting  
+- specific tone  
+- structured responses  
+- task‑specific behavior  
+
+This technique improves reliability without requiring fine‑tuning.
 
 ---
 
-## 🧩 Prompt Templates & Prompt Values  
-Developers learn how to:
+## 🧩 Prompt Templates & Prompt Values
 
-- define reusable prompt structures  
-- inject dynamic values  
-- separate logic from content  
-- prepare prompts for LangChain chains  
+Prompt templates allow reusable prompt structures with dynamic values.  
+They support:
+
+- clean separation of logic and content  
+- consistent formatting  
+- integration with LangChain chains  
+- scalable application development  
 
 ---
 
@@ -87,221 +121,162 @@ Developers learn how to:
 
 **Notebook:** `02_lcel_runnables_and_chains.ipynb`
 
-This notebook covers the full set of LCEL components used to build modular, composable LLM pipelines.
+This notebook introduces the LCEL components used to build modular, composable LLM pipelines.
 
 ---
 
-## 🔹 Piping a Prompt → Model → Output Parser  
+## 🔹 Piping a Prompt → Model → Output Parser
+
 The core LCEL pattern:
 
 ```
 prompt | model | parser
 ```
 
-This creates a clean, readable, debuggable chain.
+This creates readable, debuggable chains with minimal boilerplate.
 
 ---
 
-## 🔹 Runnable & RunnableSequence  
-The foundational LCEL building blocks:
+## 🔹 Runnable & RunnableSequence
 
-- **Runnable** — a single step  
-- **RunnableSequence** — a pipeline of steps  
+- **Runnable** — a single executable step  
+- **RunnableSequence** — a pipeline of runnables executed in order  
+
+These form the foundation of LCEL workflows.
 
 ---
 
-## 🔹 RunnablePassthrough  
-Allows you to pass original inputs forward while adding new fields.  
+## 🔹 RunnablePassthrough
+
+Allows original inputs to be forwarded while adding new fields.  
 Useful for multi‑input chains and branching logic.
 
 ---
 
-## 🔹 Batching  
-Run multiple inputs through the same chain efficiently.
+## 🔹 Batching
+
+Enables efficient processing of multiple inputs through the same chain.
 
 ---
 
-## 🔹 Streaming  
-Stream tokens as they are generated — essential for chat UIs and real‑time apps.
+## 🔹 Streaming
+
+Supports token‑by‑token output streaming for real‑time applications such as chat interfaces.
 
 ---
 
-## 🔹 Graphing Runnables  
-Visualize your chain as a graph to understand execution flow.
+## 🔹 Graphing Runnables
+
+LCEL pipelines can be visualized as graphs to understand execution flow.  
+Graphing requires the `grandalf` package.
 
 ---
 
-## 🔹 RunnableParallel  
-Run multiple branches at the same time.  
-Great for:
+## 🔹 RunnableParallel
+
+Executes multiple branches simultaneously.  
+Useful for:
 
 - generating multiple summaries  
 - running multiple models  
-- combining embeddings + metadata  
+- combining embeddings with metadata  
+- parallel analysis workflows  
 
 ---
 
-# 3️⃣ Piping a RunnableParallel with Other Runnables  
-This section demonstrates how to:
+# 3️⃣ Piping a RunnableParallel with Other Runnables
 
-- build a parallel branch  
-- merge its outputs  
-- feed the merged result into additional steps  
+Parallel branches can be composed with additional runnables to form multi‑stage workflows.
 
-This is essential for multi‑step workflows such as:
+This enables:
 
-- combining embeddings + LLM output  
-- running multiple analyses in parallel  
-- merging structured + unstructured data  
+- merging structured and unstructured outputs  
+- combining multiple analyses  
+- feeding parallel results into downstream steps  
 
-It shows how LCEL supports **complex, multi‑branch pipelines** without losing readability.
+This pattern supports complex, multi‑branch pipelines while maintaining readability.
 
 ---
 
-# 4️⃣ RunnableLambda — Custom Python Logic in LCEL  
-RunnableLambda is the missing piece that makes LCEL practical for real applications.
+# 4️⃣ RunnableLambda — Custom Python Logic in LCEL
 
-### ✔ What it does  
-**Wraps any Python function and turns it into a runnable step.**
+RunnableLambda wraps any Python function and turns it into a runnable step.
 
-### ✔ Why it’s used  
-RunnableLambda allows you to:
+### **Capabilities**
 
 - preprocess inputs  
-- postprocess model outputs  
+- postprocess outputs  
 - apply conditional logic  
 - integrate external tools  
 - enrich chain state  
-- combine Python logic + LLM steps  
+- combine Python logic with LLM steps  
 
-### ✔ Example  
+### **Example**
+
 ```python
 from langchain_core.runnables import RunnableLambda
 
 clean_text = RunnableLambda(lambda x: x.strip())
 ```
 
-Now `clean_text` can be piped into any LCEL chain.
-
-### ✔ Why it belongs in this notebook  
-RunnableLambda completes the LCEL toolkit:
-
-- Runnable  
-- RunnableSequence  
-- RunnableParallel  
-- RunnablePassthrough  
-- **RunnableLambda**  
-- Batching  
-- Streaming  
-- Graphing  
-- @chain decorator  
-
-It shows how to mix **LLM steps + Python logic** in one pipeline.
+RunnableLambda enables seamless integration of Python logic into LCEL pipelines.
 
 ---
 
-# 🧩 The `@chain` Decorator — Turning Python Functions into LCEL Chains
+# 5️⃣ The `@chain` Decorator — Python Functions as LCEL Chains
 
-The `@chain` decorator is the final LCEL building block introduced in your notebook.  
-It provides a clean, elegant way to convert a normal Python function into a **Runnable** that can be piped, composed, and executed just like any other LCEL component.
+The `@chain` decorator converts a Python function into a Runnable with LCEL execution behavior.
 
-### ✔ What the `@chain` decorator does  
-When you write:
+### **What it provides**
 
-```python
-@chain
-def my_step(x):
-    return x.upper()
-```
+- automatic wrapping into a runnable  
+- support for `.invoke()`, `.batch()`, `.stream()`  
+- compatibility with LCEL piping (`|`)  
+- metadata for debugging and graphing  
 
-LangChain automatically:
-
-- wraps your function inside a Runnable  
-- adds LCEL execution behavior  
-- enables `.invoke()`, `.batch()`, `.stream()`  
-- makes the function compatible with `|` piping  
-- preserves metadata for debugging and graphing  
-
-This means your function is no longer a plain Python function — it becomes a **chain step**.
-
-### ✔ Why it “runs”  
-Because after decoration, the function behaves like a Runnable.  
-Calling it triggers LCEL execution, not normal Python execution.
-
-This is intentional:  
-it allows your function to participate in the same pipeline as prompts, models, parsers, and other runnables.
-
-### ✔ Why it’s useful  
-The decorator makes LCEL pipelines:
-
-- cleaner  
-- more readable  
-- easier to debug  
-- easier to reuse  
-- easier to compose  
-
-Instead of manually wrapping logic in `RunnableLambda`, you can write:
+### **Example**
 
 ```python
+from langchain_core.runnables import chain
+
 @chain
 def clean_text(x):
     return x.strip()
 ```
 
-And then use it like:
-
-```python
-clean_text | model | parser
-```
-
-### ✔ How it fits into your notebook  
-Your notebook now covers:
-
-- Runnable  
-- RunnableSequence  
-- RunnableParallel  
-- Piping RunnableParallel with other runnables  
-- RunnableLambda  
-- **@chain decorator**  
-
-The decorator is the final piece because it shows how to build **modular, Python‑native LCEL steps** without extra boilerplate.
-
----
+The decorated function becomes a chain step that can be composed with prompts, models, and other runnables.
 
 ---
 
 # 📘 Learning Outcomes
 
-By completing this module, developers will understand:
+This module provides a foundation for building production‑grade LLM applications.
 
-### 🧩 Prompting Foundations  
-- System/human/AI messages  
-- Few‑shot prompting  
-- Tone control  
-- Prompt templates  
+### **Prompting Concepts**
 
-### 🧩 LCEL Foundations  
-- Runnables  
+- system, human, and AI messages  
+- few‑shot prompting  
+- tone control  
+- prompt templates  
+
+### **LCEL Concepts**
+
+- Runnable  
 - RunnableSequence  
 - RunnableParallel  
 - RunnableLambda  
-- Passthroughs  
-- Streaming  
-- Batching  
-- Graphing  
-- The `@chain` decorator  
+- RunnablePassthrough  
+- batching  
+- streaming  
+- graphing  
+- `@chain` decorator  
 
-### 🧩 Application‑Level Skills  
-- Building modular LLM pipelines  
-- Debugging chain execution  
-- Combining Python logic with LLM steps  
-- Preparing for LangGraph state machines  
+### **Application Skills**
+
+- constructing modular LLM pipelines  
+- combining Python logic with LLM steps  
+- debugging chain execution  
+- preparing for LangGraph state machines  
 
 ---
-
-
-
-
-
-
 
