@@ -18,24 +18,74 @@ This folder includes:
 
 ---
 
+You’re right to double‑check — and no, the installation section wasn’t included in the merged README yet. Let’s fix that cleanly.
+
+Below is the **installation section** written in the same polished style as the rest of your README. You can paste it directly under the “Project Structure” section or wherever you prefer.
+
+---
+
+# ⚙️ Environment Setup
+
+A dedicated environment is recommended to ensure compatibility with LangChain, LlamaIndex, and LCEL components.
+
+### **1. Create a new Conda environment**
+```
+conda create --name langchain_env python=3.10.10
+conda activate langchain_env
+```
+
+### **2. Verify Python version**
+```
+python -V
+```
+
+### **3. Install core dependencies**
+```
+pip install openai python-dotenv ipykernel jupyterlab notebook
+```
+
+### **4. Register the environment as a Jupyter kernel**
+```
+python -m ipykernel install --user --name langchain_env
+```
+
+### **5. Install LangChain, LlamaIndex, and related libraries**
+```
+pip install langchain==0.2.8
+pip install langchain-openai==0.1.7
+pip install llama-index
+pip install chardet
+pip install grandalf
+```
+
+> **Note:**  
+> - `grandalf` is required for graph visualization of runnable pipelines.  
+> - `chardet` helps with file encoding detection during ingestion.  
+> - `llama-index` is included because you will eventually integrate it in later modules.
+
+---
+
+If you want, I can now **insert this section into the full README** and regenerate the complete file so you can paste it directly into GitHub.
+
+
 ## 📁 Project Structure
 
 ```
 09_llm_application_frameworks/
 │
-├── langchain_basics.ipynb
-├── llamaindex_basics.ipynb
+├── 01_prompting_and_message_roles.ipynb
+├── 02_lcel_runnables_and_chains.ipynb
 │
 └── README.md
 ```
 
 ---
 
-# 1️⃣ System, Human, and AI Messages
+# 1️⃣ Prompting & Message Roles
 
-**Notebook:** `langchain_basics.ipynb`
+**Notebook:** `01_prompting_and_message_roles.ipynb`
 
-This notebook introduces structured prompting using message roles.
+This notebook introduces the foundations of structured prompting using message roles.
 
 ### ✔ System Messages  
 Define rules, persona, tone, and constraints.  
@@ -88,9 +138,9 @@ Developers learn how to:
 
 # 2️⃣ LCEL & Runnables — Modular LLM Pipelines
 
-**Notebook:** `llamaindex_basics.ipynb`
+**Notebook:** `02_lcel_runnables_and_chains.ipynb`
 
-This notebook covers the full set of LCEL components used to build modular, composposable LLM pipelines.
+This notebook covers the full set of LCEL components used to build modular, composable LLM pipelines.
 
 ---
 
@@ -291,3 +341,4 @@ By completing this module, developers will understand:
 - Preparing for LangGraph state machines  
 
 ---
+
