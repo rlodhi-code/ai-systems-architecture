@@ -65,9 +65,6 @@ pip install grandalf
 
 ---
 
-If you want, I can now **insert this section into the full README** and regenerate the complete file so you can paste it directly into GitHub.
-
-
 ## 📁 Project Structure
 
 ```
