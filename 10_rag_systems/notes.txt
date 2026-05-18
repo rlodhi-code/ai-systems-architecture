@@ -1,0 +1,16 @@
+# Use following on the anaconda prompt
+conda create --name langchain_env python=3.10.10
+activate langchain_env
+# to verify the version
+python -V 
+pip install openai python-dotenv ipykernel jupyterlab notebook
+# add to the list of jupyter kernels list
+python -m ipykernel install --user --name langchain_env
+pip install langchain==0.2.8
+pip install langchain-openai==0.1.7
+pip install chardet
+pip install grandalf
+
+
+
+
