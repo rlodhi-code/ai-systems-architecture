@@ -10,7 +10,5 @@ pip install langchain==0.2.8
 pip install langchain-openai==0.1.7
 pip install chardet
 pip install grandalf
-
-
-
-
+# In LangChain 1.x, the Chroma integration is maintained in langchain-chroma.
+pip install -U langchain-chroma
