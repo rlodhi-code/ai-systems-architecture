@@ -18,12 +18,6 @@ This folder includes:
 
 ---
 
-You’re right to double‑check — and no, the installation section wasn’t included in the merged README yet. Let’s fix that cleanly.
-
-Below is the **installation section** written in the same polished style as the rest of your README. You can paste it directly under the “Project Structure” section or wherever you prefer.
-
----
-
 # ⚙️ Environment Setup
 
 A dedicated environment is recommended to ensure compatibility with LangChain, LlamaIndex, and LCEL components.
