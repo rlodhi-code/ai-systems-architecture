@@ -2,6 +2,7 @@
 __pycache__/
 my_saved_models/
 langchain_module_files/
+intro-to-ds-lectures/
 *.pyc
 .env
 .env/
