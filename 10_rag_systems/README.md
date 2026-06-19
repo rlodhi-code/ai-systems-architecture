@@ -55,9 +55,10 @@ Generation is the final step: combining retrieved context with a prompt to produ
 
 Follow these steps from an **Anaconda Prompt** to create a fully isolated environment with all dependencies required to run this notebook.
 
-### Step 1 — Create a Conda Environment (I have used my existing environment llm_course_env_311. I have used Jupyter Notebook and not JupyterLab)
+### Step 1 — Create a Conda Environment
 
 ```bash
+Note: I have used my existing environment llm_course_env_311 and Jupyter Notebook)
 conda create -n rag_env python=3.11 -y
 ```
 
