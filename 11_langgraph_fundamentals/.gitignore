@@ -1,6 +1,7 @@
 .ipynb_checkpoints/
 __pycache__/
 my_saved_models/
+langgraph_module_files/
 intro-to-ds-lectures/
 *.pyc
 .env

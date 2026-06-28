@@ -1,0 +1,53 @@
+conda create --name langgraph_env_311 python=3.11.11
+conda activate langgraph_env_311
+
+# This is the newest option as of June 28, 2026, which I haven’t used. My older notebooks should still run smoothly on earlier versions.
+pip install langchain langgraph langchain-openai langchain-core langsmith openai==1.81.0 python-dotenv==1.1.0 mypy-extensions==1.1.0 grandalf==0.8 ipykernel==6.29.5 notebook==7.4.2
+
+#First option this preferred approach. Run as one command. 
+pip install langchain>=1.0.0 langchain-core>=1.4.0 langsmith>=0.9.0 langchain-openai>=0.3.17 langgraph==0.4.8 langgraph-checkpoint langgraph-prebuilt langgraph-sdk langgraph-checkpoint-sqlite openai==1.81.0 python-dotenv==1.1.0 mypy-extensions==1.1.0 grandalf==0.8 ipykernel==6.29.5 notebook==7.4.2
+
+# Second Option install individual components
+# --- Core LangChain ecosystem ---
+pip install langchain>=1.0.0
+pip install langchain-core>=1.4.0
+pip install langsmith>=0.9.0
+pip install langchain-openai>=0.3.17
+
+# --- Core LangGraph ecosystem ---
+pip install langgraph==0.4.8
+pip install langgraph-checkpoint==4.1.1
+pip install langgraph-prebuilt==1.1.0
+pip install langgraph-sdk==0.4.2
+pip install langgraph-checkpoint-sqlite==0.3.17
+
+# --- OpenAI client + Utilities ---
+pip install openai==1.81.0
+pip install python-dotenv==1.1.0
+pip install mypy-extensions==1.1.0
+pip install grandalf==0.8
+
+# --- Jupyter Notebook only ---
+pip install ipykernel==6.29.5
+pip install notebook==7.4.2
+Previously, following environment was setup
+pip install langchain==0.3.25
+pip install langchain_core==0.3.60
+pip install langchain_text_splitters==0.3.8
+pip install langsmith==0.3.42
+pip install langgraph==0.4.8
+pip install langgraph_checkpoint==2.0.26
+pip install langgraph_prebuilt==0.2.2
+pip install langraph_sdk==0.1.70
+pip install langchain_openai==0.3.17
+pip install openai==1.81.0
+pip install langgraph-checkpoint-sqlite==0.3.17
+pip install python-dotenv==1.1.0
+pip install mypy-ipython==20.8.0
+pip install grandalf==0.8
+pip install ipykernel==6.29.5
+pip install jupyterlab==4.4.2
+pip install notebook==7.4.2
+python -m ipykernel install --user --name=langgraph_env_311
+
+
