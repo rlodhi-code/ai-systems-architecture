@@ -1,0 +1,9 @@
+.ipynb_checkpoints/
+__pycache__/
+my_saved_models/
+intro-to-ds-lectures/
+*.pyc
+.env
+.env/
+.venv/
+.DS_Store
