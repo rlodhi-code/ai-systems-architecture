@@ -1,10 +1,22 @@
+# Jupyter
 .ipynb_checkpoints/
+
+# Python
 __pycache__/
-my_saved_models/
-langgraph_module_files/
-intro-to-ds-lectures/
 *.pyc
+
+# Environment
 .env
 .env/
 .venv/
+
+# SQLite checkpoint databases (generated at runtime by Section 12)
+*.db
+langgraph.db-shm
+langgraph.db-wal
+
+# locally saved 14 notebooks
+langgraph_module_files/
+
+# macOS
 .DS_Store
