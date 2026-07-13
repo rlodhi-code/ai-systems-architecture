@@ -50,4 +50,6 @@ pip install jupyterlab==4.4.2
 pip install notebook==7.4.2
 python -m ipykernel install --user --name=langgraph_env_311
 
+# --- For taking care of warnings ---
+pip install --upgrade requests charset-normalizer
 
